@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  
+  // Onboarding preferences
+  modestyLevel  String?
+  bodyShape     String?
+  budget        String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  wardrobeItems WardrobeItem[]
+  outfits       Outfit[]
+}
+
+model WardrobeItem {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name     String
+  type     String  // Top, Bottom, Dress, Outerwear, Accessory
+  color    String
+  fabric   String?
+  imageUrl String?
+  tags     String? // JSON string of tags
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  outfitItems OutfitItem[]
+}
+
+model Outfit {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name    String
+  occasion String?
+  
+  createdAt DateTime @default(now())
+  
+  items OutfitItem[]
+}
+
+model OutfitItem {
+  id             Int          @id @default(autoincrement())
+  outfitId       Int
+  outfit         Outfit       @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  wardrobeItemId Int
+  wardrobeItem   WardrobeItem @relation(fields: [wardrobeItemId], references: [id], onDelete: Cascade)
+}
