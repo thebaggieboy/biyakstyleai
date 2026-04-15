@@ -6,11 +6,10 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@libsql/client": "^0.17.2",
-    "@prisma/adapter-libsql": "^7.5.0",
     "@prisma/client": "^7.5.0",
     "bcryptjs": "^3.0.3",
     "jsonwebtoken": "^9.0.3",
