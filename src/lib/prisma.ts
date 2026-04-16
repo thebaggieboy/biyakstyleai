@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Pool, neonConfig } from 'pg';
+import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 const globalForPrisma = globalThis as unknown as { prisma_new: PrismaClient };
